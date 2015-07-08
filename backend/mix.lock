@@ -1,0 +1,3 @@
+%{"json": {:hex, :json, "0.3.2"},
+  "timex": {:hex, :timex, "0.16.0"},
+  "tzdata": {:hex, :tzdata, "0.1.6"}}

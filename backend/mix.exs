@@ -27,6 +27,9 @@ defmodule Drivy.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [
+      { :json, "~> 0.3.0" },
+      { :timex, "~> 0.16.0" }
+    ]
   end
 end
