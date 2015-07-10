@@ -1,5 +1,7 @@
 # Drivy Backend Challenge
 
+[![Build Status](http://img.shields.io/travis/watsonbox/drivy_jobs_elixir.svg?style=flat)](https://travis-ci.org/watsonbox/drivy_jobs_elixir)
+
  Looking for a job? Check out our [open positions](https://en.drivy.com/jobs).
 
 ## Guidelines
