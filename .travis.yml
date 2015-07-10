@@ -1,0 +1,8 @@
+language: elixir
+install:
+  - cd backend
+  - mix local.hex --force
+  - mix deps.get
+script:
+  - echo $TRAVIS_ELIXIR_VERSION
+  - mix test
