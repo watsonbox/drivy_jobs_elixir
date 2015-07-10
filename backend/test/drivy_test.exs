@@ -13,6 +13,10 @@ defmodule DrivyTest do
     assert_transform Drivy.Level3, "level3/data.json", "level3/output.json"
   end
 
+  test "Level 4" do
+    assert_transform Drivy.Level4, "level4/data.json", "level4/output.json"
+  end
+
   defp assert_transform(module, input_path, output_path) do
     # Get result JSON with whitespace removed
     json = File.read!(output_path) |> String.split |> Enum.join
