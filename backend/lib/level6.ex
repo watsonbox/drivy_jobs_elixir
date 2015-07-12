@@ -49,10 +49,15 @@ defmodule Drivy.Level6 do
   end
 
   # Actions for a modification are the difference between those for the rental pre and post modification
-  def rental_actions(rental_mod = %{"rental_id" => i}) do
+  def rental_actions(rental_mod = %{rental: rental}) do
     diff_rental_actions(
-      rental_mod |> apply_rental_mod |> rental_actions,
-      rental_mod.rental |> rental_actions
+      rental_mod
+        |> Map.take(["distance", "start_date", "end_date"])
+        |> Map.to_list
+        |> apply_rental_mods(rental)
+        |> rental_actions,
+      rental_mod.rental
+        |> rental_actions
     )
   end
 
@@ -74,23 +79,14 @@ defmodule Drivy.Level6 do
     for { actor, amount } <- action1, into: [], do: { actor, amount - action2[actor] }
   end
 
-  def apply_rental_mod(rental_mod) do
-    apply_rental_mod(rental_mod.rental, rental_mod)
+  def apply_rental_mods([{k, v} | rest], rental) do
+    rest |> apply_rental_mods(Map.put(rental, k, v))
   end
 
-  def apply_rental_mod(rental, rental_mod) do
-    case rental_mod do
-      %{"distance" => distance} ->
-        apply_rental_mod(%{rental | "distance" => distance}, Map.delete(rental_mod, "distance"))
-      %{"start_date" => date} ->
-        apply_rental_mod(%{rental | "start_date" => date}, Map.delete(rental_mod, "start_date"))
-      %{"end_date" => date} ->
-        apply_rental_mod(%{rental | "end_date" => date}, Map.delete(rental_mod, "end_date"))
-      _ ->
-        rental
-        |> Map.put(:duration, rental_duration(rental))
-        |> Map.put(:price, rental_price(rental))
-    end
+  def apply_rental_mods([], rental) do
+    rental
+    |> Map.put(:duration, rental_duration(rental))
+    |> Map.put(:price, rental_price(rental))
   end
 
   def rental_price(rental) do
