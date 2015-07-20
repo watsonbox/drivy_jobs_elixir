@@ -142,6 +142,6 @@ defmodule Drivy.Level6 do
   end
 
   defp index_by(list, field) do
-    for x <- list, into: %{}, do: { x[field], x }
+    for x <- list, into: %HashDict{}, do: { x[field], x }
   end
 end
